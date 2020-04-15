@@ -1,0 +1,25 @@
+Scrieti un program care defineste un masiv unidimensional 'mas' (cu N numere de tip intreg intruduse de utilizator) si calculeaza cel mai scurt subset de numere cu suma cit mai aproape de 0.
+
+----Exemplu-1---
+Date de intrare:
+  int mas[3] = {2, 5, -4};
+
+Rezultat:
+  Subset: {5, -4}
+  Suma: 1 
+
+-----Exemplu-2-----
+Date de intrare:
+ int mas[4] = {2, -1, 3, 1};
+
+Rezultat:
+  Subset: {-1, 1} 
+  Suma: 0
+
+----Exemplu-3----
+Date de intrare:
+ int mas[10] = {1, -8, 14, 32, 100, -15, 0, 2, 15];
+
+Rezultat:
+  Subset: {0}
+  Suma: 0
