@@ -6,6 +6,9 @@ int main()
     int n;
     cout<<"Va rog introduceti numarul de numere in masiv"<<endl;
     cin>>n;
+    
+    // array sizes must be known at compile time
+    // please declare n as 'constexpr int n = <maximum size>;' and use another variable to specify how many items youare working with
     int submas[n],mas[n];
     for(int i=1;i<=n;i++)
     {
