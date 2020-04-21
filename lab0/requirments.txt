@@ -1,0 +1,2 @@
+1)make user insert elements in an array till he inserts -1.
+2)count the most 0 repeated consecutivly in an array.
