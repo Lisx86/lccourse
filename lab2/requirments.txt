@@ -1,0 +1,1 @@
+gets an text file with latine/kirilik words separated by spaces and takes by argument and integer number between x=1..10 and finds all pairs of words that have x symbols from end match x symbols from the start of another word. (exclude mutual pairs and polindrom words)
