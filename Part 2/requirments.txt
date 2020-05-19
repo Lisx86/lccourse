@@ -1,0 +1,5 @@
+Make a structure of Dogs.
+Input Dogs by keyboard.
+Allocate dynamiclly.
+Print Function.
+Sort Function.
