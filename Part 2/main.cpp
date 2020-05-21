@@ -1,5 +1,8 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
+
+int n;
 
 enum class Fur{Alb=0,Negru=1,Mixt=2};
 
@@ -10,11 +13,55 @@ struct Dog
     Fur bl;
 };
 
+int Count_Lines(string path)
+{
+    ifstream f(path);
+    string line;
+    while(!f.eof())
+    {
+        getline(f,line);
+        n++;
+    }
+    f.close();
+    n=n-1;
+    cout<<n;
+    return n;
+}
+
+void Load(Dog ZDogs[],string path)
+{
+    ifstream f(path);
+    int i=0;
+    for(int i=0;i<=n-1;i++)
+    {
+        f>>ZDogs[i].breed;
+        f>>ZDogs[i].age;
+    }
+    f.close();
+}
+
+void AddDog(Dog ZDogs[],string path)
+{
+    fstream f(path);
+    cout<<"Please insert new dogs breed:";
+    cin>>ZDogs[n-1].breed;
+    cout<<"Please inset new dogs age:";
+    cin>>ZDogs[n-1].age;
+    for(int i=0;i<=n-1;i++)
+    {
+        f<<ZDogs[i].breed<<" ";
+        f<<ZDogs[i].age;
+        f<<endl;
+        if(ZDogs[i].breed==ZDogs[n-1].breed)break;
+    }
+    f.close();
+}
+
 void Print(Dog ZDogs[],int n)
 {
     for(int i=0;i<=n-1;i++)
     {
-        cout<<"Dog"<<" "<<i<<" "<<ZDogs[i].breed<<" "<<ZDogs[i].age<<endl;
+        cout<<"Dog "<<i<<" "<<ZDogs[i].breed<<" "<<ZDogs[i].age<<endl;
     }
     cout<<endl;
 }
@@ -35,28 +82,35 @@ void Sort(Dog ZDogs[],int n)
 }
 
 int main(){
-    int n,x;
-    cout<<"Please insert the number of Dogs"<<endl;
-    cin>>n;
-    Dog * Dogs = new Dog[n]; 
-    for(int j=0;j<=n-1;j++)
+    int raspuns;
+    n=Count_Lines("file.txt");
+    Dog * Dogs = new Dog[n];
+    Load(Dogs,"file.txt");
+    while(true)
     {
-        cout<<"Dog nr "<<j+1<<" Breed =";
-        cin>>Dogs[j].breed;
-        cout<<"Dog nr "<<j+1<<" Age =";
-        cin>>Dogs[j].age;
-        cout<<"Dog nr "<<j+1<<" Fur =";
-        cin>>x;
-        switch(x)
+        cout<<"1)Add a line"<<endl;
+        cout<<"2)Remove a line"<<endl;
+        cout<<"3)Print Original List"<<endl;
+        cout<<"4)Sort and Print List by age"<<endl;
+        cout<<"5)Exit"<<endl;
+        cout<<"Your Choice:";
+        cin>>raspuns;
+        cout<<endl;
+        switch(raspuns)
         {
-            case 0: {Dogs[j].bl=Fur::Alb;break;}
-            case 1: {Dogs[j].bl=Fur::Negru;break;}
-            case 2: {Dogs[j].bl=Fur::Mixt;break;}
-            default: {Dogs[j].bl=Fur::Mixt;}
+        case 1:
+        {
+            delete[] Dogs;
+            n++;
+            Dog * Dogs = new Dog[n];
+            Load(Dogs,"file.txt");
+            AddDog(Dogs,"file.txt");
         }
+        case 2:{}
+        case 3:{Print(Dogs,n);break;}
+        case 4:{}
+        }
+        if(raspuns==5) break;
     }
-    Print(Dogs,n);
-    Sort(Dogs,n);
-    Print(Dogs,n);
     delete[] Dogs;
 }
