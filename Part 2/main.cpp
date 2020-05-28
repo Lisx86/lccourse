@@ -2,7 +2,7 @@
 #include <fstream>
 using namespace std;
 
-int n;
+int n,k;
 
 enum class Fur{Alb=0,Negru=1,Mixt=2};
 
@@ -15,6 +15,7 @@ struct Dog
 
 int Count_Lines(string path)
 {
+
     ifstream f(path);
     string line;
     while(!f.eof())
@@ -23,12 +24,13 @@ int Count_Lines(string path)
         n++;
     }
     f.close();
+    cout<<n<<endl;
     n=n-1;
-    cout<<n;
+    cout<<n<<endl;
     return n;
 }
 
-void Load(Dog ZDogs[],string path)
+void Load(Dog* ZDogs,string path)
 {
     ifstream f(path);
     int i=0;
@@ -40,51 +42,54 @@ void Load(Dog ZDogs[],string path)
     f.close();
 }
 
-void AddDog(Dog ZDogs[],string path)
+Dog& AddDog(Dog*& ZDogs)
 {
+    if(k-n>0)
+    {
+        n++;
+        cout<<"Please insert new dogs breed:";
+        cin>>ZDogs[n-1].breed;
+        cout<<"Please inset new dogs age:";
+        cin>>ZDogs[n-1].age;
+        return ZDogs[n-1];
+    }
+    else
+    {
+        k=k+10;
+        Dog * Dogz = new Dog[k];
+        for(int i=0;i<=n-1;i++)
+        {
+            Dogz[i]=ZDogs[i];
+        }
+        delete[] ZDogs;
+        ZDogs = Dogz;
+        return Dogz[n-1];
+    }
+}
+
+void Save(Dog* ZDogs,string path){
     fstream f(path);
-    cout<<"Please insert new dogs breed:";
-    cin>>ZDogs[n-1].breed;
-    cout<<"Please inset new dogs age:";
-    cin>>ZDogs[n-1].age;
     for(int i=0;i<=n-1;i++)
     {
         f<<ZDogs[i].breed<<" ";
-        f<<ZDogs[i].age;
-        f<<endl;
-        if(ZDogs[i].breed==ZDogs[n-1].breed)break;
+        f<<ZDogs[i].age<<endl;
     }
     f.close();
 }
 
-void Print(Dog ZDogs[],int n)
-{
-    for(int i=0;i<=n-1;i++)
+void Print(Dog* ZDogs){
+    for (int i = 0; i <= n-1; i++)
     {
-        cout<<"Dog "<<i<<" "<<ZDogs[i].breed<<" "<<ZDogs[i].age<<endl;
+        cout<<i<<") "<<ZDogs[i].breed<<" "<<ZDogs[i].age<<endl;
     }
-    cout<<endl;
-}
-
-void Sort(Dog ZDogs[],int n)
-{
-    for(int i=0;i<=n-1;i++)
-    {
-        if(ZDogs[i-1].age>ZDogs[i].age)
-        {
-            Dog Temp;
-            Temp=ZDogs[i];
-            ZDogs[i]=ZDogs[i-1];
-            ZDogs[i-1]=Temp;
-            i=1;
-        }
-    }
+    
 }
 
 int main(){
     int raspuns;
     n=Count_Lines("file.txt");
-    Dog * Dogs = new Dog[n];
+    k=n+10;
+    Dog * Dogs = new Dog[k];
     Load(Dogs,"file.txt");
     while(true)
     {
@@ -100,17 +105,18 @@ int main(){
         {
         case 1:
         {
-            delete[] Dogs;
-            n++;
-            Dog * Dogs = new Dog[n];
-            Load(Dogs,"file.txt");
-            AddDog(Dogs,"file.txt");
+            Print(Dogs);
+            AddDog(Dogs);
+            Print(Dogs);
+            Save(Dogs,"file.txt");
         }
         case 2:{}
-        case 3:{Print(Dogs,n);break;}
+        case 3:{}
         case 4:{}
         }
         if(raspuns==5) break;
     }
     delete[] Dogs;
 }
+
+
