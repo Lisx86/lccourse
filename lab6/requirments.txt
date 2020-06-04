@@ -1,0 +1,3 @@
+Make a struct Dog in a singly linked list and make functions
+such as add dog and delete dog in order for them to do their
+functionality.
